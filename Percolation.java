@@ -1,7 +1,5 @@
-import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.QuickFindUF;
-
-import java.util.Scanner;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class Percolation {
     private int nSquare;
@@ -26,7 +24,7 @@ public class Percolation {
         }
     }
 
-    private int oneDimensionSiteAddress(int row, int col) {
+    public int oneDimensionSiteAddress(int row, int col) {
 
         return row * n + col;
 
@@ -34,26 +32,27 @@ public class Percolation {
 
     // opens the site (row, col) if it is not open already
     public void open(int row, int col) {
-        openSites[oneDimensionSiteAddress(row, col)] = true;
-        unionAdjacent(row*n+col);
+
+        openSites[oneDimensionSiteAddress(row - 1, col - 1)] = true;
+        unionAdjacent((row - 1) * n + (col - 1));
 
     }
 
     // is the site (row, col) open?
     public boolean isOpen(int row, int col) {
-        return openSites[oneDimensionSiteAddress(row, col)];
+        return openSites[oneDimensionSiteAddress(row - 1, col - 1)];
     }
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
-        return fullSites[oneDimensionSiteAddress(row, col)];
+        return fullSites[oneDimensionSiteAddress(row - 1, col - 1)];
     }
 
     // returns the number of open sites
     public int numberOfOpenSites() {
-        int count=0;
-        for(int i=0;i<nSquare;i++){
-            if(isOpen(i/n,i%n)) count++;
+        int count = 0;
+        for (int i = 0; i < nSquare; i++) {
+            if (isOpen((i / n) + 1, (i % n) + 1)) count++;
         }
         return count;
     }
@@ -89,42 +88,47 @@ public class Percolation {
 
     private void unionAdjacents(int x, int y) {
         if (y >= 0 && y <= nSquare - 1) {
-            if (isOpen(y / n, y % n))
+            if (isOpen((y / n) + 1, (y % n) + 1))
                 quickFindUF.union(x, y);
         }
     }
 
     // test client (optional)
     public static void main(String[] args) {
-        Percolation percolate = new Percolation(5); // MyClass is tested
+        Percolation percolate = new Percolation(10); // MyClass is tested
         // generate and print n numbers between lo and hi
 
 
         int x;
         // printf(String.valueOf(x));
-      //  int count = 0;
+        //  int count = 0;
         while (!percolate.percolates()) {
 
-            x = StdRandom.uniform(0, 24);
+            x = StdRandom.uniform(0, percolate.nSquare - 1);
+            //  x = StdRandom.uniform(0, 10);
             while (percolate.openSites[x]) {
 
-                x = StdRandom.uniform(0, 24);
+                x = StdRandom.uniform(0, percolate.nSquare - 1);
+                //    x = StdRandom.uniform(0, 10);
             }
             System.out.println("random number to open site: " + x);
-            percolate.open(x / percolate.n, x % percolate.n);
+            percolate.open((x / percolate.n) + 1, (x % percolate.n) + 1);
             System.out.println("site at : " + x + " " + percolate.openSites[x]);
         }
         if (percolate.percolates()) System.out.println("System Percolates");
         else System.out.println("System does not Percolates");
-        while (true) {
-            Scanner scanner = new Scanner(System.in);
-            int x1 = scanner.nextInt();
-            int x2 = scanner.nextInt();
 
-
-            System.out.println(
-                    x1 + "," + x2 + "connected? " + percolate.quickFindUF.connected(x1, x2));
-
-        }
+        double fraction = (double) percolate.numberOfOpenSites() / percolate.nSquare;
+        System.out.println("System percolates at: " + fraction);
+        // while (true) {
+        //     Scanner scanner = new Scanner(System.in);
+        //     int x1 = scanner.nextInt();
+        //     int x2 = scanner.nextInt();
+        //
+        //
+        //     System.out.println(
+        //             x1 + "," + x2 + "connected? " + percolate.quickFindUF.connected(x1, x2));
+        //
+        // }
     }
 }

@@ -47,13 +47,65 @@ assertEquals(6,tester.oneDimensionSiteAddress(1,1));
 
 
     @Test
-    public void openARandomSite() {
+    public void systemPercolates() {
         Percolation tester = new Percolation(5); // MyClass is tested
         // generate and print n numbers between lo and hi
 
         // assert statements
-        tester.open(0,24);
-        assertTrue(tester.isOpen(0,24));
+        tester.open(1,1);
+        tester.open(2,1);
+        tester.open(3,1);
+        tester.open(4,1);
+        tester.open(5,1);
+
+        assertTrue(tester.percolates());
+    }
+
+    @Test
+    public void systemDoesNotPercolates() {
+        Percolation tester = new Percolation(5); // MyClass is tested
+        // generate and print n numbers between lo and hi
+
+        // assert statements
+        tester.open(1,1);
+        tester.open(2,1);
+        tester.open(3,1);
+        tester.open(4,1);
+       // tester.open(5,1);
+
+        assertFalse(tester.percolates());
+    }
+
+    @Test
+    public void SitesOpen() {
+        Percolation tester = new Percolation(5); // MyClass is tested
+        // generate and print n numbers between lo and hi
+
+        // assert statements
+        tester.open(1,1);
+        tester.open(2,1);
+        tester.open(3,1);
+        tester.open(4,1);
+        // tester.open(5,1);
+
+        assertEquals("4 sites open",4,tester.numberOfOpenSites());
+    }
+
+    @Test
+    public void SitesOpen4() {
+        Percolation tester = new Percolation(5); // MyClass is tested
+        // generate and print n numbers between lo and hi
+
+        // assert statements
+        tester.open(1,1);
+        tester.open(2,1);
+        tester.open(3,1);
+        tester.open(2,2);
+        tester.open(3,1);
+
+        // tester.open(5,1);
+
+        assertEquals("4 sites open",4,tester.numberOfOpenSites());
     }
 
 }
