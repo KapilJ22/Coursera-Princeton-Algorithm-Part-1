@@ -1,5 +1,5 @@
-import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     final private int nSquare;
@@ -107,29 +107,28 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        if (quickFindUF.connected(nSquare, nSquare + 1))
-            return true;
-        else return false;
+        return quickFindUF.connected(nSquare, nSquare + 1);
+
     }
 
     private void unionAdjacent(int x) {
         int y = nSquare;
         if (x >= 0 && x < n) {
             quickFindUF.union(x, y);
-        //    setSitesFull(x, y);
+            //    setSitesFull(x, y);
         }
         y = nSquare + 1;
         if (x >= nSquare - n && x < nSquare) {
             quickFindUF.union(x, y);
-         //   setSitesFull(x, y);
+            //   setSitesFull(x, y);
         }
 
-        if(!(x%n==0)) {
+        if (!(x % n == 0)) {
             y = x - 1;
             unionAdjacents(x, y);
         }
 
-        if(!((x+1)%n==0)) {
+        if (!((x + 1) % n == 0)) {
             y = x + 1;
             unionAdjacents(x, y);
         }
@@ -151,7 +150,7 @@ public class Percolation {
         if (y >= 0 && y <= nSquare - 1) {
             if (isOpen((y / n) + 1, (y % n) + 1)) {
                 quickFindUF.union(x, y);
-              //  setSitesFull(x, y);
+                //  setSitesFull(x, y);
             }
         }
     }
