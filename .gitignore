@@ -1,3 +1,7 @@
 # Project exclude paths
 /.lift/
 /input8 copy.txt
+!/input8 copy.txt
+!/input6 copy.txt
+!/input7 copy.txt
+!/Percolation.zip
